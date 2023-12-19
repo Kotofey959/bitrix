@@ -14,8 +14,7 @@ async def get_new_lead(request: Request):
     :return:
     """
     print("Зашли сюда")
-    data = await request.json()
-    print(data)
+    print(request)
 
 
 @app.get("/lead")
