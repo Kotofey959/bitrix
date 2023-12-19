@@ -16,8 +16,11 @@ async def get_new_lead():
     :return:
     """
     print("Зашли сюда")
-    data = request.get_json()
-    print(data)
+    if request.method == "POST":
+        data = request.get_json()
+        print(data)
+    else:
+        print("Шляпа")
 
 if __name__ == "__main__":
     try:
