@@ -16,6 +16,8 @@ async def get_new_lead(request: Request):
     print("Зашли сюда")
     try:
         print(request.json())
+    except:
+        print("Не смогли достать json")
 
 
 @app.get("/lead")
