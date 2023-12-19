@@ -20,8 +20,8 @@ async def get_new_lead(request: Request):
     try:
         data = await request.json()
         print(data)
-    except:
-        print("Не смогли достать json")
+    except Exception as ex:
+        print(ex)
 
 
 @app.get("/lead")
