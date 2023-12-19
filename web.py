@@ -10,7 +10,7 @@ BITRIX_TOKEN = "ueqd3rweu1k5z52xnyk5zcr17m3zoxqy"
 
 
 @app.post("/lead")
-async def get_new_lead(request):
+async def get_new_lead(request: Request):
     """
     Обработка нового лида
 
@@ -18,7 +18,8 @@ async def get_new_lead(request):
     """
     print("Зашли сюда")
     try:
-        print(request)
+        data = await request.body()
+        print(str(data))
     except Exception as ex:
         print(ex)
 
