@@ -1,26 +1,23 @@
-from flask import Flask, request
-
+from typing import Any
 import uvicorn
+from fastapi import FastAPI, Request
 from pydantic import BaseModel
-
-app = Flask(__name__)
-
+app = FastAPI()
 BITRIX_TOKEN = "ueqd3rweu1k5z52xnyk5zcr17m3zoxqy"
 
 
-@app.route("/lead", methods=["GET", "POST"])
-async def get_new_lead():
+@app.post("/lead")
+async def get_new_lead(request: Request):
     """
     Обработка нового лида
-
     :return:
     """
     print("Зашли сюда")
-    if request.method == "POST":
-        data = request.get_json()
+    try:
+        data = await request.body()
         print(data)
-    else:
-        print("шляпа")
+    except:
+        print("Не смогли достать json")
 
 if __name__ == "__main__":
     try:
