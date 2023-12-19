@@ -6,7 +6,6 @@ import requests
 from bot import send_message
 
 app = FastAPI()
-BITRIX_TOKEN = "ueqd3rweu1k5z52xnyk5zcr17m3zoxqy"
 
 PLACE_SCORE = {
     "1883": 1,
@@ -46,8 +45,6 @@ ATTRACTION_SCORE = {
     "1953": 5
 }
 
-used_ids = set({})
-
 
 @app.post("/lead")
 async def get_new_lead(request: Request):
@@ -55,7 +52,6 @@ async def get_new_lead(request: Request):
     Обработка нового лида
     :return:
     """
-    print("Зашли сюда")
     try:
         response = await request.body()
         decoded_response = response.decode("utf-8")
@@ -68,17 +64,12 @@ async def get_new_lead(request: Request):
             return
 
         lid_id = lid_ids[0]
-        if lid_id in used_ids:
-            return
         lead_info = get_lid_info(lid_id)
         result = lead_info.get("result")
         if not result or result.get("STATUS_ID") != "20":
             return
         parsed_info = parse_lid_info(lead_info)
         await send_message(parsed_info)
-        used_ids.add(lid_id)
-        if len(used_ids) > 99:
-            used_ids.clear()
 
     except:
         print("Не смогли достать json")
@@ -86,6 +77,7 @@ async def get_new_lead(request: Request):
 
 def get_lid_info(lid_id: str):
     """
+    Получаем информацию по лиду
 
     :param lid_id:
     :return:
@@ -98,6 +90,12 @@ def get_lid_info(lid_id: str):
 
 
 def parse_lid_info(lid_info: dict):
+    """
+    Разбираем полученый json по лиду
+
+    :param lid_info:
+    :return:
+    """
     result = lid_info.get("result")
 
     return {
