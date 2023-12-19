@@ -15,7 +15,8 @@ async def get_new_lead(request: Request):
     """
     print("Зашли сюда")
     try:
-        print(request.json())
+        data = request.json()
+        print(data)
     except:
         print("Не смогли достать json")
 
