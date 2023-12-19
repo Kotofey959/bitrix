@@ -22,15 +22,6 @@ async def get_new_lead(data=Body()):
         print("Не смогли достать json")
 
 
-@app.get("/lead")
-async def get_new_lead(request: Request):
-    """
-    Обработка нового лида
-
-    :return:
-    """
-    print("Зашли в get")
-
 
 if __name__ == "__main__":
     try:
