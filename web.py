@@ -1,4 +1,4 @@
-from typing import  Any
+from typing import Any
 
 import uvicorn
 from fastapi import FastAPI, Request
@@ -9,13 +9,8 @@ app = FastAPI()
 BITRIX_TOKEN = "ueqd3rweu1k5z52xnyk5zcr17m3zoxqy"
 
 
-class RequestPayload(BaseModel):
-    result: Any
-    time: Any
-
-
 @app.post("/lead")
-async def get_new_lead(payload: RequestPayload, request: Request):
+async def get_new_lead(payload: dict):
     """
     Обработка нового лида
 
@@ -23,8 +18,7 @@ async def get_new_lead(payload: RequestPayload, request: Request):
     """
     print("Зашли сюда")
     try:
-        data = payload.result
-        print(data)
+        print(payload)
     except:
         print("Не смогли достать json")
 
