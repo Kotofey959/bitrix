@@ -38,6 +38,16 @@ PERSONAL_SCORE = {
     "1935": 5
 }
 
+ATTRACTION_SCORE = {
+    "1945": 1,
+    "1947": 2,
+    "1949": 3,
+    "1951": 4,
+    "1953": 5
+}
+
+used_ids = set({})
+
 
 @app.post("/lead")
 async def get_new_lead(request: Request):
@@ -58,13 +68,17 @@ async def get_new_lead(request: Request):
             return
 
         lid_id = lid_ids[0]
-        print(lid_id)
+        if lid_id in used_ids:
+            return
         lead_info = get_lid_info(lid_id)
         result = lead_info.get("result")
         if not result or result.get("STATUS_ID") != "20":
             return
         parsed_info = parse_lid_info(lead_info)
         await send_message(parsed_info)
+        used_ids.add(lid_id)
+        if len(used_ids) > 99:
+            used_ids.clear()
 
     except:
         print("Не смогли достать json")
@@ -88,10 +102,10 @@ def parse_lid_info(lid_info: dict):
 
     return {
         "place_score": PLACE_SCORE.get(result.get("UF_CRM_1694005680")),
-        "recommendation": result.get("UF_CRM_1694005757"),
-        "holiday": result.get("UF_CRM_1694005820"),
-        "personal_score": result.get("UF_CRM_1694005866"),
-        "attraction_score": result.get("UF_CRM_1694005680"),
+        "recommendation": RECOMMENDATION.get(result.get("UF_CRM_1694005757")),
+        "holiday": HOLIDAY.get(result.get("UF_CRM_1694005820")),
+        "personal_score": PERSONAL_SCORE.get(result.get("UF_CRM_1694005866")),
+        "attraction_score": ATTRACTION_SCORE.get(result.get("UF_CRM_1694005908")),
         "id": result.get("ID"),
         "name": result.get("NAME"),
         "comments": result.get("comments"),
