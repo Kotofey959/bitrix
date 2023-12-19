@@ -8,7 +8,7 @@ app = Flask(__name__)
 BITRIX_TOKEN = "ueqd3rweu1k5z52xnyk5zcr17m3zoxqy"
 
 
-@app.route("/lead", methods=["POST"])
+@app.route("/lead", methods=["GET", "POST"])
 async def get_new_lead():
     """
     Обработка нового лида
@@ -20,7 +20,7 @@ async def get_new_lead():
         data = request.get_json()
         print(data)
     else:
-        print("Шляпа")
+        print("шляпа")
 
 if __name__ == "__main__":
     try:
