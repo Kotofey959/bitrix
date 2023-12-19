@@ -1,21 +1,15 @@
-from typing import List
+
 
 import uvicorn
-from fastapi import FastAPI, Request
-from pydantic import BaseModel
+from fastapi import FastAPI, Body
 
 app = FastAPI()
 
 BITRIX_TOKEN = "ueqd3rweu1k5z52xnyk5zcr17m3zoxqy"
 
 
-class RequestPayload(BaseModel):
-    result: List
-    time: List
-
-
 @app.post("/lead")
-async def get_new_lead(payload:RequestPayload):
+async def get_new_lead(data=Body()):
     """
     Обработка нового лида
 
@@ -23,7 +17,6 @@ async def get_new_lead(payload:RequestPayload):
     """
     print("Зашли сюда")
     try:
-        data = payload.result
         print(data)
     except:
         print("Не смогли достать json")
