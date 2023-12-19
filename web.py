@@ -17,7 +17,7 @@ async def get_new_lead(data=Body()):
     """
     print("Зашли сюда")
     try:
-        print(data)
+        print(data["result"])
     except:
         print("Не смогли достать json")
 
